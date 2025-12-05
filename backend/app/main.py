@@ -5,13 +5,27 @@ from models import Base, Task
 from schemas import TaskRead, TaskCreate
 
 from fastapi import FastAPI, Depends
+from fastapi.middleware.cors import CORSMiddleware
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
 
 load_dotenv()
 app = FastAPI()
 
-SQLALCHEMY_DATABASE_URL = f"{os.getenv('DATABASE_URI')}/{os.getenv('DATABASE_NAME')}"
+origins = [
+    str(os.getenv('FRONTEND_URL')),
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+SQLALCHEMY_DATABASE_URL = f"sqlite:///{os.getenv('DATABASE_NAME')}"
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
