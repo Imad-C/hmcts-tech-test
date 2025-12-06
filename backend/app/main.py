@@ -1,8 +1,8 @@
 import os
 from dotenv import load_dotenv
 
-from models import Base, Task
-from schemas import TaskRead, TaskCreate
+from .models import Base, Task
+from .schemas import TaskRead, TaskCreate
 
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware

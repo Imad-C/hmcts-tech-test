@@ -1,6 +1,6 @@
 from sqlalchemy import Column, String, Integer, DateTime, Enum
 from sqlalchemy.orm import declarative_base
-from utils import Status
+from .utils import Status
 
 Base = declarative_base()
 
