@@ -24,3 +24,13 @@ export function setTasksError(error: string) {
 export function getTasksError() {
   return tasksError;
 }
+
+let tasksSuccess = $state<string>("");
+
+export function setTasksSuccess(success: string) {
+  tasksSuccess = success;
+}
+
+export function getTasksSuccess() {
+  return tasksSuccess;
+}

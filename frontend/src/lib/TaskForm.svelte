@@ -3,8 +3,10 @@
   import { addTask } from "./tasks";
   import {
     getTasksError,
+    getTasksSuccess,
     pushTasksStore,
     setTasksError,
+    setTasksSuccess,
   } from "./tasksStore.svelte";
 
   let taskForm: HTMLFormElement;
@@ -21,14 +23,17 @@
       const task = await addTask(payload);
       pushTasksStore(task);
       taskForm.reset();
+
+      setTasksSuccess(`Task '${task.title}' added!`);
       setTasksError("");
     } catch (error: any) {
+      setTasksSuccess("");
       setTasksError(error.message);
     }
   }
 </script>
 
-<div>
+<div class="task-form-container">
   <form bind:this={taskForm} onsubmit={handleAddTask} class="task-form">
     <div class="task-form-input">
       <label for="task-title">Title</label>
@@ -72,15 +77,23 @@
     <div class="error-container">
       <p>{getTasksError()}</p>
     </div>
+  {:else if getTasksSuccess()}
+    <div class="success-container">
+      <p>{getTasksSuccess()}</p>
+    </div>
   {/if}
 </div>
 
 <style>
-  .task-form {
-    background: rgb(245, 245, 245);
+  .task-form-container {
     position: sticky;
     top: 10px;
     height: fit-content;
+  }
+
+  .task-form {
+    background: rgb(245, 245, 245);
+
     padding: 10px;
     border: solid black 1px;
     margin-bottom: 20px;
@@ -126,5 +139,14 @@
     border: solid red 2px;
     border-radius: 7px;
     box-shadow: 3px 3px 0px lightsalmon;
+  }
+
+  .success-container {
+    color: green;
+    font-weight: bold;
+    padding: 5px;
+    border: solid lightgreen 2px;
+    border-radius: 7px;
+    box-shadow: 3px 3px 0px lightseagreen;
   }
 </style>
