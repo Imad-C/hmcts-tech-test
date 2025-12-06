@@ -1,14 +1,14 @@
-export interface TodoPayload {
+export interface TaskPayload {
   title: string;
   description?: string;
   status: string;
   due: Date;
 }
 
-export interface Todo {
+export interface Task {
   id: number;
   title: string;
   description?: string;
   status: string;
-  due: Date;
+  due: string;
 }
