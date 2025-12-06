@@ -12,7 +12,7 @@
           <p>{task.status}</p>
           <p>{formatDatetime(task.due)}</p>
         </div>
-        <p class="task-description">{task.description}</p>
+        <p class:task-description={task.description}>{task.description}</p>
       </div>
     </div>
   {/each}
@@ -22,23 +22,26 @@
   .task-container {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
   }
 
   .task-card {
-    width: 100%;
+    max-width: 400px;
     padding: 5px;
     border: solid black 1px;
     border-radius: 7px;
+    background: rgb(245, 245, 245);
     box-shadow: 3px 3px 0px gray;
   }
 
   .task-title {
     text-align: center;
+    font-weight: 900;
   }
 
   .task-details {
     background: lightgray;
+    border: solid gray 2px;
     border-radius: 4px;
   }
 

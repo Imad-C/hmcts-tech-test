@@ -14,3 +14,13 @@ export function getTasksStore() {
 export function pushTasksStore(task: any) {
   tasksStore.push(task);
 }
+
+let tasksError = $state<string>("");
+
+export function setTasksError(error: string) {
+  tasksError = error;
+}
+
+export function getTasksError() {
+  return tasksError;
+}

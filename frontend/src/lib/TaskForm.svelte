@@ -1,7 +1,11 @@
 <script lang="ts">
   import type { TaskPayload } from "./types";
   import { addTask } from "./tasks";
-  import { pushTasksStore } from "./tasksStore.svelte";
+  import {
+    getTasksError,
+    pushTasksStore,
+    setTasksError,
+  } from "./tasksStore.svelte";
 
   let taskForm: HTMLFormElement;
   let title: string;
@@ -13,17 +17,21 @@
     event.preventDefault();
 
     const payload: TaskPayload = { title, description, status, due };
-    const task = await addTask(payload);
-    pushTasksStore(task);
-
-    taskForm.reset();
+    try {
+      const task = await addTask(payload);
+      pushTasksStore(task);
+      taskForm.reset();
+      setTasksError("");
+    } catch (error: any) {
+      setTasksError(error.message);
+    }
   }
 </script>
 
 <div>
   <form bind:this={taskForm} onsubmit={handleAddTask} class="task-form">
     <div class="task-form-input">
-      <label for="task-title">Name</label>
+      <label for="task-title">Title</label>
       <input
         type="text"
         id="task-title"
@@ -44,7 +52,7 @@
       <select id="task-status" class=" input-field" bind:value={status}>
         <option value="todo">Todo</option>
         <option value="started">Started</option>
-        <option value="complete">Complete</option>
+        <option value="completed">Complete</option>
       </select>
     </div>
     <div class="task-form-input">
@@ -59,15 +67,23 @@
 
     <button type="submit" class="add-task">Add Task</button>
   </form>
+
+  {#if getTasksError()}
+    <div class="error-container">
+      <p>{getTasksError()}</p>
+    </div>
+  {/if}
 </div>
 
 <style>
   .task-form {
+    background: rgb(245, 245, 245);
     position: sticky;
     top: 10px;
     height: fit-content;
     padding: 10px;
     border: solid black 1px;
+    margin-bottom: 20px;
     border-radius: 7px;
     box-shadow: 5px 5px 0px black;
   }
@@ -101,5 +117,14 @@
   .add-task:hover {
     cursor: pointer;
     background: gray;
+  }
+
+  .error-container {
+    color: red;
+    font-weight: bold;
+    padding: 5px;
+    border: solid red 2px;
+    border-radius: 7px;
+    box-shadow: 3px 3px 0px lightsalmon;
   }
 </style>

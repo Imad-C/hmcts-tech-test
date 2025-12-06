@@ -6,6 +6,10 @@ export async function getTasks(): Promise<Task[]> {
   const resp = await fetch(`${BACKEND_URL}/tasks`);
   const data = await resp.json();
 
+  if (!resp.ok) {
+    throw new Error(data.detail[0].msg);
+  }
+
   return data;
 }
 
@@ -19,6 +23,10 @@ export async function addTask(payload: TaskPayload): Promise<Task> {
   });
 
   const data = await resp.json();
+
+  if (!resp.ok) {
+    throw new Error(data.detail[0].msg);
+  }
 
   return data;
 }

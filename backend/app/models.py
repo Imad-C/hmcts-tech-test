@@ -1,5 +1,6 @@
-from sqlalchemy import Column, String, Integer, DateTime
+from sqlalchemy import Column, String, Integer, DateTime, Enum
 from sqlalchemy.orm import declarative_base
+from utils import Status
 
 Base = declarative_base()
 
@@ -9,7 +10,7 @@ class Task(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, nullable=False)
     description = Column(String, nullable=True)
-    status = Column(String, nullable=False)
+    status = Column(Enum(Status), nullable=False)
     due = Column(DateTime, nullable=False)
 
 
