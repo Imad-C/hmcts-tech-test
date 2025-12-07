@@ -13,7 +13,7 @@
   let title: string;
   let description: string;
   let status: string;
-  let due: Date;
+  let due: string;
 
   async function handleAddTask(event: SubmitEvent) {
     event.preventDefault();

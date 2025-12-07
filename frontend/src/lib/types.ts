@@ -2,7 +2,7 @@ export interface TaskPayload {
   title: string;
   description?: string;
   status: string;
-  due: Date;
+  due: string;
 }
 
 export interface Task {
