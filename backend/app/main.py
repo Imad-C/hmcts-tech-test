@@ -13,9 +13,9 @@ from sqlalchemy.orm import Session, sessionmaker
 load_dotenv()
 app = FastAPI()
 
-origins = [
-    str(os.getenv('FRONTEND_URL')),
-]
+origins = [str(os.getenv('FRONTEND_URL_1')), str(os.getenv('FRONTEND_URL_2'))]
+if any(origin == 'None' for origin in origins):
+    raise KeyError("Missing FRONTEND_URL env variable.")
 
 app.add_middleware(
     CORSMiddleware,
